@@ -1,0 +1,41 @@
+version: "3.0"
+services:
+  es_01:
+    image: elasticsearch:7.17.5
+    container_name: es_01
+    ports:
+      - "9200:9200"
+    environment:
+      - node.name=es_01
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=es_02,es_03
+      - cluster.initial_master_nodes=es_01,es_02,es_03
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+    networks:
+      - elastic
+  es_02:
+    image: elasticsearch:7.17.5
+    container_name: es_02
+    environment:
+      - node.name=es_02
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=es_01,es_03
+      - cluster.initial_master_nodes=es_01,es_02,es_03
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+    networks:
+      - elastic
+  es_03:
+    image: elasticsearch:7.17.5
+    container_name: es_03
+    environment:
+      - node.name=es_03
+      - cluster.name=es-cluster
+      - discovery.seed_hosts=es_01,es_02
+      - cluster.initial_master_nodes=es_01,es_02,es_03
+      - ES_JAVA_OPTS=-Xms256m -Xmx256m
+    networks:
+      - elastic
+
+networks:
+  elastic:
+    driver: bridge
