@@ -1,0 +1,4 @@
+[submodule "books/es-in-action/example"]
+	path = books/es-in-action/example
+	url = git@github.com:dakrone/elasticsearch-in-action.git
+	branch = 7.x
