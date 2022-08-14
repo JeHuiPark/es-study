@@ -1,0 +1,26 @@
+### create document for test
+
+PUT {{host}}/online-shop/_doc/{{test_doc_id}}
+Content-Type: application/json
+
+{
+  "caption": "Learning Elasticsearch",
+  "price": 12
+}
+
+### Search Document
+
+GET {{host}}/online-shop/_doc/{{test_doc_id}}
+
+### update with using script
+POST {{host}}/online-shop/_update/{{test_doc_id}}
+Content-Type: application/json
+
+{
+  "script": {
+    "source": "ctx._source.price += params.price_diff",
+    "params": {
+      "price_diff": 10
+    }
+  }
+}

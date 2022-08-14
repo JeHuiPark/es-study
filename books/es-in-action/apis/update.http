@@ -1,0 +1,49 @@
+
+### Update
+
+# curl -X POST --location "http://localhost:9200/get-together/_update/1"
+#    -H "Content-Type: application/json"
+#    -d "{\"doc\":{\"organizer\": \"Roy\"}}"
+POST {{host}}/get-together/_update/{{test_doc_id}}
+Content-Type: application/json
+
+{
+  "doc": {
+    "organizer": "Roy",
+    "new_field": "ffff"
+  }
+}
+
+### Search Updated Document
+
+GET {{host}}/get-together/_doc/{{test_doc_id}}
+
+### Upsert
+
+POST {{host}}/get-together/_update/{{test_doc_id}}
+Content-Type: application/json
+
+{
+  "doc": {
+    "organizer": "Roy"
+  },
+  "upsert": {
+    "name": "_Elasticsearch Denver",
+    "organizer": "_Roy"
+  }
+}
+
+### Doc as upsert
+
+POST {{host}}/get-together/_update/{{test_doc_id}}
+Content-Type: application/json
+
+{
+  "doc": {
+    "organizer": "organizer"
+  },
+  "upsert": {
+    "organizer": "_Roy"
+  },
+  "doc_as_upsert" : true
+}
