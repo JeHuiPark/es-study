@@ -1,0 +1,39 @@
+### Pagination
+
+GET {{host}}/get-together/_search?from=10&size=10
+
+### Query
+
+POST {{host}}/get-together/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "term": {
+      "name": "elasticsearch"
+    }
+  }
+}
+
+### Filter
+// https://www.elastic.co/guide/en/elasticsearch/reference/7.5/query-dsl-filtered-query.html
+// https://www.elastic.co/guide/en/elasticsearch/reference/7.17/filter-search-results.html
+// https://www.elastic.co/guide/en/elasticsearch/reference/7.17/query-filter-context.html
+
+POST {{host}}/get-together/_search
+Content-Type: application/json
+
+{
+  "query": {
+    "bool": {
+      "must": {
+        "match_all": {}
+      },
+      "filter": {
+        "term": {
+          "tags": "elasticsearch"
+        }
+      }
+    }
+  }
+}
